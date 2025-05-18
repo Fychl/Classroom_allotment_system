@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Portal - Room Allotment System</title>
+    <link rel="stylesheet" href="css/index.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <span>Teacher Portal</span>
+        </div>
+
+        <div class="nav-links">
+        <a href="dashboardt.html"><i class="fas fa-home"></i> Home</a>
+        <a href="timetable-generator.html"><i class="fas fa-calendar-alt"></i> Timetable</a>
+        <a href="report.html"><i class="fas fa-chart-bar"></i> Reports</a>
+        <div class="profile-logo-container" style="display: flex;">
+            <div class="profile-logo" id="profileLogo" style="position: relative;">
+            <img
+                src="teacher-avatar.png"
+                alt="Teacher Profile"
+                id="profileImage"
+            />
+            <input type="file" id="uploadImageInput" accept="image/*" style="display: none" />
+            </div>
+            <div class="profile-dropdown" id="profileDropdown">
+            <div class="profile-header" style="position: relative;">
+                <img
+                src="teacher-avatar.png"
+                class="profile-avatar"
+                alt="Teacher Avatar"
+                id="profileAvatar"/>
+                <button
+                id="uploadImageBtn"
+                title="Upload Profile Image"> + </button>
+                <div class="profile-container">
+                    <div class="profile-item">
+                        <span class="profile-label">Name:</span>
+                        <span class="profile-value" id="profileName"></span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Teacher ID:</span>
+                        <span class="profile-value" id="profileNumber"></span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Email:</span>
+                        <span class="profile-value" id="profileEmail"></span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Department:</span>
+                        <span class="profile-value" id="profileDepartment"></span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Subjects:</span>
+                        <span class="profile-value" id="profileSubject"></span>
+                    </div>
+                </div>
+            <a href="../login/login.html" class="view-profile-btn" style="background: #e74c3c;">Logout</a>
+            </div>
+        </div>
+        <button id="profileButton" type="button">Profile</button>
+        <button id="darkModeToggle" title="Toggle Dark Mode" class="fas fa-moon"></button>
+        </div>
+       </div>
+    </div>  
+
+  
+    <div class="container period-card">
+        <section class="welcome-board">
+            <h1>Welcome to Teacher Dashboard</h1>
+            <div class="welcome-content">
+                <p>Manage your classes, timetable, and resources through this portal.</p>
+            </div>
+
+            <div class="teacher-features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>View Timetable</h3>
+                    <p>Check your class schedule and room allocations</p>
+                    <a href="timetable-final-updated.html" class="btn">Go to Timetable</a>
+                </div>
+    
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Class Management</h3>
+                    <p>View and manage your student lists</p>
+                    <a href="../teacher/stats.html" class="btn">Manage Classes</a>
+                </div>
+    
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Course Materials</h3>
+                    <p>Upload and share teaching resources</p>
+                    <a href="../teacher/Course-Meterials.html" class="btn">Access Materials</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/navbar.js"></script>
+</body>
+</html>

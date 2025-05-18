@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Room Allotment System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">
+            <i class="fas fa-user-graduate"></i>
+            <span>Student Portal</span>
+        </div>
+        <div class="nav-links">
+            <a href="dashboards.html"><i class="fas fa-home"></i> Home</a>
+            <a href="generated-timetable.html"><i class="fas fa-calendar-alt"></i> Timetable</a>
+            <a href="class-stats.html"><i class="fas fa-chart-bar"></i> Statics</a>
+            <a href="course-meterial-student.html"><i class="fas fa-book"></i> Notes</a>
+            <a href="report.html"><i class="fas fa-file-alt"></i> Reports</a>
+            <div class="profile-logo-container">
+                <div class="profile-logo" id="profileLogo" style="position: relative;">
+                    <img src="images/student-avatar.png" alt="Student Profile" id="profileImage" />
+                    <input type="file" id="uploadImageInput" accept="image/*" style="display:none" />
+                </div>
+                <button id="profileButton" type="button" >Profile</button>
+                <button id="darkModeToggle" title="Toggle Dark Mode" class="fas fa-moon"></button>
+            </div>
+         </div>
+    </div>
+    <div class="container">
+        <!-- Welcome Board -->
+        <section class="welcome-board">
+            <h1>Welcome to Shiats College</h1>
+            <div class="welcome-content">
+                <p>Our college provides world-class education with state-of-the-art facilities. 
+                The Room Allotment System helps you manage your classes and resources efficiently.</p>
+                <div class="quick-links">
+                    <a href="generated-timetable.html" class="quick-link-btn">
+                        <i class="fas fa-calendar-alt"></i> View Timetable
+                    </a>
+                    <a href="class-stats.html" class="quick-link-btn">
+                        <i class="fas fa-chart-bar"></i> View Statistics
+                    </a>
+                    <a href="course-meterial-student.html" class="quick-link-btn">
+                        <i class="fas fa-book"></i> Course Meterial
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- College Gallery -->
+        <section class="gallery-section">
+            <h2>College Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="img/camp.jpg" alt="College Campus">
+                    <div class="gallery-caption">Main Campus Building</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="img/lab.jpg" alt="Computer Lab">
+                    <div class="gallery-caption">Computer Lab</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="img/libr.jpg" alt="Library">
+                    <div class="gallery-caption">Central Library</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="img/audit.jpg" alt="Auditorium">
+                    <div class="gallery-caption">College Auditorium</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section class="events-section">
+            <h2>Upcoming Events</h2>
+            <div class="events-list">
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="day">15</span>
+                        <span class="month">June</span>
+                    </div>
+                    <div class="event-details">
+                        <h3>Annual Science Symposium</h3>
+                        <p>9:00 AM - 4:00 PM | Main Auditorium</p>
+                        <a href="#" class="event-link">View Details</a>
+                    </div>
+                </div>
+                <div class="event-card">
+                    <div class="event-date">
+                        <span class="day">22</span>
+                        <span class="month">June</span>
+                    </div>
+                    <div class="event-details">
+                        <h3>Career Guidance Workshop</h3>
+                        <p>10:00 AM - 1:00 PM | Seminar Hall</p>
+                        <a href="#" class="event-link">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/index.js"></script>
+    <script src="js/navbar.js"></script>
+</body>
+</html>

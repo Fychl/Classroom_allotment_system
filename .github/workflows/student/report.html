@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Issue Reporting</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../teacher/css/report.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">
+            <i class="fas fa-user-graduate"></i>
+            <span>Student Portal</span>
+        </div>
+        <div class="nav-links">
+            <a href="dashboards.html"><i class="fas fa-home"></i> Home</a>
+            <a href="generated-timetable.html"><i class="fas fa-calendar-alt"></i> Timetable</a>
+            <a href="class-stats.html"><i class="fas fa-chart-bar"></i> Statics</a>
+            <a href="course-meterial-student.html"><i class="fas fa-book"></i> Notes</a>
+            <a href="report.html"><i class="fas fa-file-alt"></i> Reports</a>
+            <div class="profile-logo-container">
+                <div class="profile-logo" id="profileLogo" style="position: relative;">
+                    <img src="images/student-avatar.png" alt="Student Profile" id="profileImage" />
+                    <input type="file" id="uploadImageInput" accept="image/*" style="display:none" />
+                </div>
+                <button id="profileButton" type="button" >Profile</button>
+                <button id="darkModeToggle" title="Toggle Dark Mode" class="fas fa-moon"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Form -->
+    <div class="report-container">
+        <h1>Report an Issue</h1>
+        <form id="reportForm">
+            <div class="form-group">
+                <label for="teacherName">Your Name:</label>
+                <input type="text" id="teacherName" placeholder="e.g. Dr. Sarah Johnson" required>
+            </div>
+
+            <div class="form-group">
+                <label for="teacherEmail">From:</label>
+                <input type="email" id="teacherEmail" placeholder="e.g. s.johnson@university.edu" required>
+            </div>
+            <div class="form-group">
+                <label for="receiverEmail">To:</label>
+                <input type="email" id="receiverEmail" placeholder="e.g. receiver@university.edu" required>
+            </div>
+
+            <div class="form-group">
+                <label for="issueType">Issue Type:</label>
+                <select id="issueType" required>
+                    <option value="">-- Select an issue --</option>
+                    <option value="timetable-conflict">Timetable Conflict</option>
+                    <option value="missing-class">Missing Class</option>
+                    <option value="Cleaning">Cleaning</option>
+                    <option value="Class-room">Class-room things</option>
+                    <option value="technical-error">Technical Error</option>
+                    <option value="suggestion">Suggestion</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="issueDescription">Description:</label>
+                <textarea id="issueDescription" placeholder="Describe your issue..." rows="5" required></textarea>
+            </div>
+
+            <button type="submit">Submit Report</button>
+            <p id="confirmationMsg" style="color: green; display: none;">✅ Issue submitted successfully!</p>
+        </form>
+    </div>
+
+    <script src="js/index.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

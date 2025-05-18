@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - Classroom Allotment System</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../student/css/styles.css" />
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <i class="fas fa-door-open"></i>
+                <h1>Classroom Allotment System</h1>
+                <h2>Login</h2>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="teacher">Teacher</button>
+                <button class="tab-btn" data-tab="student">Student</button>
+            </div>
+
+            <div
+              id="loginError"
+              style="color: red; text-align: center; margin: 10px 0; display: none;"
+            ></div>
+
+            <div class="tab-content" id="teacher-login">
+                <form id="teacherLoginForm">
+                    <div class="form-group">
+                        <label for="teacherId">Teacher ID</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-id-card"></i>
+                            <input
+                              type="text"
+                              id="teacherId"
+                              placeholder="Enter your teacher ID"
+                              required
+                            />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacherPassword">Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input
+                              type="password"
+                              id="teacherPassword"
+                              placeholder="Enter your password"
+                              required
+                            />
+                        </div>
+                    </div>
+                    <button type="submit" class="auth-btn">Login</button>
+                </form>
+            </div>
+
+            <div class="tab-content" id="student-login" style="display: none;">
+                <form id="studentLoginForm">
+                    <div class="form-group">
+                        <label for="studentEmail">Email</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input
+                              type="email"
+                              id="studentEmail"
+                              placeholder="Enter your email"
+                              required
+                            />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentPassword">Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input
+                              type="password"
+                              id="studentPassword"
+                              placeholder="Enter your password"
+                              required
+                            />
+                        </div>
+                    </div>
+                    <button type="submit" class="auth-btn">Login</button>
+                </form>
+            </div>
+
+            <div class="auth-footer">
+                <p>
+                    Don't have an account?
+                    <a href="register.html">Register here</a>
+                </p>
+                <p><a href="forgot-password.html">Forgot Password?</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // New code to handle tab switching
+        const tabButtons = document.querySelectorAll(".tab-btn");
+        const teacherLogin = document.getElementById("teacher-login");
+        const studentLogin = document.getElementById("student-login");
+
+        tabButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => btn.classList.remove("active"));
+                // Add active class to clicked button
+                button.classList.add("active");
+
+                // Show/hide login forms based on data-tab attribute
+                if (button.getAttribute("data-tab") === "teacher") {
+                    teacherLogin.style.display = "block";
+                    studentLogin.style.display = "none";
+                } else if (button.getAttribute("data-tab") === "student") {
+                    teacherLogin.style.display = "none";
+                    studentLogin.style.display = "block";
+                }
+                // Clear any login error message on tab switch
+                document.getElementById("loginError").style.display = "none";
+            });
+        });
+    </script>
+    <script>
+        // Handle teacher login form submission
+        const teacherLoginForm = document.getElementById('teacherLoginForm');
+        const studentLoginForm = document.getElementById('studentLoginForm');
+        const loginErrorDiv = document.getElementById('loginError');
+
+        teacherLoginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loginErrorDiv.style.display = 'none';
+
+            const teacherId = document.getElementById('teacherId').value.trim();
+            const password = document.getElementById('teacherPassword').value;
+
+            try {
+                const response = await fetch('http://localhost:5000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        emailOrUserId: teacherId,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    if (data.userType === 'teacher') {
+                        // Redirect to teacher dashboard or homepage
+                        window.location.href = '/teacher/dashboardt.html';
+                    } else {
+                        loginErrorDiv.textContent = 'User type mismatch.';
+                        loginErrorDiv.style.display = 'block';
+                    }
+                } else {
+                    loginErrorDiv.textContent = data.error || 'Login failed';
+                    loginErrorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                loginErrorDiv.textContent = 'Error connecting to server.';
+                loginErrorDiv.style.display = 'block';
+            }
+        });
+
+        // Handle student login form submission
+        studentLoginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loginErrorDiv.style.display = 'none';
+
+            const studentEmail = document.getElementById('studentEmail').value.trim();
+            const password = document.getElementById('studentPassword').value;
+
+            try {
+                const response = await fetch('http://localhost:5000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        emailOrUserId: studentEmail,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    if (data.userType === 'student') {
+                        // Redirect to student dashboard or homepage
+                        window.location.href = '/student/dashboards.html';
+                    } else {
+                        loginErrorDiv.textContent = 'User type mismatch.';
+                        loginErrorDiv.style.display = 'block';
+                    }
+                } else {
+                    loginErrorDiv.textContent = data.error || 'Login failed';
+                    loginErrorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                loginErrorDiv.textContent = 'Error connecting to server.';
+                loginErrorDiv.style.display = 'block';
+            }
+        });
+    </script>
+   </body>
+</html>

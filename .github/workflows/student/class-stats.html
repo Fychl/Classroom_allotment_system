@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Statistics - Room Allotment System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">
+            <i class="fas fa-user-graduate"></i>
+            <span>Student Portal</span>
+        </div>
+        <div class="nav-links">
+            <a href="dashboards.html"><i class="fas fa-home"></i> Home</a>
+            <a href="generated-timetable.html"><i class="fas fa-calendar-alt"></i> Timetable</a>
+            <a href="class-stats.html"><i class="fas fa-chart-bar"></i> Statics</a>
+            <a href="course-meterial-student.html"><i class="fas fa-user"></i> Notes </a>
+            <a href="report.html"><i class="fas fa-file-alt"></i> Reports</a>
+            <div class="profile-logo-container">
+                <div class="profile-logo" id="profileLogo" style="position: relative;">
+                    <img src="images/student-avatar.png" alt="Student Profile" id="profileImage" />
+                    <input type="file" id="uploadImageInput" accept="image/*" style="display:none" />
+                </div>
+                <button id="profileButton" type="button" >Profile</button>
+                <button id="darkModeToggle" title="Toggle Dark Mode" class="fas fa-moon"></button>
+            </div>
+        </div>
+    </div>
+  <div class="container class-stats">
+        <h1>Class Statistics</h1>
+        
+        <div class="stats-section">
+            <h2>Classes by Subject</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>This Week</h3>
+                    <p>Math: 12 classes</p>
+                    <p>Science: 10 classes</p>
+                    <p>History: 8 classes</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>This Month</h3>
+                    <p>Math: 48 classes</p>
+                    <p>Science: 40 classes</p>
+                    <p>History: 32 classes</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats-section">
+            <h2>Classes by Teacher</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>This Week</h3>
+                    <p>Mr. Smith: 15 classes</p>
+                    <p>Ms. Johnson: 12 classes</p>
+                    <p>Mrs. Lee: 10 classes</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>This Month</h3>
+                    <p>Mr. Smith: 60 classes</p>
+                    <p>Ms. Johnson: 48 classes</p>
+                    <p>Mrs. Lee: 40 classes</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats-section">
+            <h2>Classroom Availability</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Currently Available Classrooms</h3>
+                    <p>Classroom ID: C101</p>
+                    <p>Classroom ID: C102</p>
+                    <p>Classroom ID: C103</p>
+                    <p>Classroom ID: C104</p>
+                    <p>Classroom ID: C105</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Total Classrooms</h3>
+                    <p>Classroom ID: C101</p>
+                    <p>Classroom ID: C102</p>
+                    <p>Classroom ID: C103</p>
+                    <p>Classroom ID: C104</p>
+                    <p>Classroom ID: C105</p>
+                    <p>Classroom ID: C106</p>
+                    <p>Classroom ID: C107</p>
+                    <p>Classroom ID: C108</p>
+                    <p>Classroom ID: C109</p>
+                    <p>Classroom ID: C110</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/index.js"></script>
+     <script src="js/navbar.js"></script>
+</body>
+</html>

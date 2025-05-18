@@ -1,0 +1,40 @@
+/* Timetable Table Styling */
+.timetable-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.timetable-table thead tr {
+    background-color: #3498db;
+    color: white;
+    text-align: left;
+    font-weight: bold;
+}
+
+.timetable-table th, .timetable-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.timetable-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.timetable-table tbody tr:hover {
+    background-color: #d6e4f7;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .timetable-table {
+        font-size: 12px;
+    }
+
+    .timetable-table th, .timetable-table td {
+        padding: 8px 10px;
+    }
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Course Materials - Student View</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../student/css/styles.css" />
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">
+            <i class="fas fa-user-graduate"></i>
+            <span>Student Portal</span>
+        </div>
+        <div class="nav-links">
+            <a href="dashboards.html"><i class="fas fa-home"></i> Home</a>
+            <a href="generated-timetable.html"><i class="fas fa-calendar-alt"></i> Timetable</a>
+            <a href="class-stats.html"><i class="fas fa-chart-bar"></i> Statics</a>
+            <a href="course-meterial-student.html"><i class="fas fa-user"></i> Notes</a>
+            <a href="report.html"><i class="fas fa-file-alt"></i> Reports</a>
+            <div class="profile-logo-container">
+                <div class="profile-logo" id="profileLogo" style="position: relative;">
+                    <img src="images/student-avatar.png" alt="Student Profile" id="profileImage" />
+                    <input type="file" id="uploadImageInput" accept="image/*" style="display:none" />
+                </div>
+                <button id="profileButton" type="button" >Profile</button>
+                <button id="darkModeToggle" title="Toggle Dark Mode" class="fas fa-moon"></button>
+            </div>
+        </div>
+    </div>
+
+    <h1 style="border: 2px solid #f5f5f5; background-color: #f5f5f5; border-radius: 20px;">Course Materials</h1>
+
+    <div class="resource-section" id="pdf-section">
+        <h2>PDF Documents</h2>
+        <ul class="pdf-list" id="pdfList">
+            <!-- PDF links will be dynamically inserted here -->
+        </ul>
+    </div>
+
+    <div class="resource-section" id="video-section">
+        <h2>Video Lectures</h2>
+        <div class="video-list" id="videoList">
+            <!-- Video embeds will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        // Fetch course materials from backend API and render
+        async function loadCourseMaterials() {
+            const pdfList = document.getElementById('pdfList');
+            const videoList = document.getElementById('videoList');
+
+            // Clear existing content
+            pdfList.innerHTML = '';
+            videoList.innerHTML = '';
+
+            try {
+                const response = await fetch('/api/course-materials');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch course materials');
+                }
+                const data = await response.json();
+                const materials = data.courseMaterials || [];
+
+                const documents = materials.filter(m => m.type === 'document');
+                const videos = materials.filter(m => m.type === 'video');
+
+                if (documents.length === 0) {
+                    pdfList.innerHTML = '<li>No documents uploaded yet.</li>';
+                } else {
+                    documents.forEach(doc => {
+                        const li = document.createElement('li');
+                        const a = document.createElement('a');
+                        a.href = doc.url;
+                        a.target = '_blank';
+                        a.textContent = doc.title + ' (' + doc.fileName + ')';
+                        li.appendChild(a);
+                        pdfList.appendChild(li);
+                    });
+                }
+
+                if (videos.length === 0) {
+                    videoList.innerHTML = '<p>No videos uploaded yet.</p>';
+                } else {
+                    videos.forEach(video => {
+                        const container = document.createElement('div');
+                        container.className = 'video-container';
+
+                        const videoElem = document.createElement('video');
+                        videoElem.controls = true;
+                        videoElem.src = video.url;
+                        videoElem.title = video.title;
+
+                        const p = document.createElement('p');
+                        p.textContent = video.title + ' (' + video.fileName + ')';
+
+                        container.appendChild(videoElem);
+                        container.appendChild(p);
+                        videoList.appendChild(container);
+                    });
+                }
+            } catch (error) {
+                pdfList.innerHTML = '<li>Error loading documents.</li>';
+                videoList.innerHTML = '<p>Error loading videos.</p>';
+                console.error('Error loading course materials:', error);
+            }
+        }
+
+        // Load materials on page load
+        window.onload = loadCourseMaterials;
+    </script>
+    <script src="js/index.js"></script>
+</body>
+</html>

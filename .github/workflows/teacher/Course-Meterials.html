@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Course Materials Upload - Teacher Portal</title>
+    <link rel="stylesheet" href="css/timetable-generator.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="logo">
+      <i class="fas fa-chalkboard-teacher"></i>
+      <span>Teacher Portal</span>
+    </div>
+
+    <div class="nav-links">
+      <a href="dashboardt.html"><i class="fas fa-home"></i> Home</a>
+      <a href="timetable-generator.html"><i class="fas fa-calendar-alt"></i> Timetable</a>
+      <a href="report.html"><i class="fas fa-chart-bar"></i> Reports</a>
+      <div class="profile-logo-container" style="display: flex;">
+        <div class="profile-logo" id="profileLogo" style="position: relative;">
+          <img
+            src="teacher-avatar.png"
+            alt="Teacher Profile"
+            id="profileImage"
+          />
+          <input type="file" id="uploadImageInput" accept="image/*" style="display: none" />
+        </div>
+        <div class="profile-dropdown" id="profileDropdown">
+          <div class="profile-header" style="position: relative;">
+            <img
+              src="teacher-avatar.png"
+              class="profile-avatar"
+              alt="Teacher Avatar"
+              id="profileAvatar"/>
+            <button
+              id="uploadImageBtn"
+              title="Upload Profile Image"> + </button>
+            <h3>Teacher Profile</h3>
+          </div>
+          <div class="profile-info">
+            <p><strong>Name:</strong> <span id="profileName">Loading...</span></p>
+            <p><strong>Email:</strong> <span id="profileEmail">Loading...</span></p>
+            <p><strong>Department:</strong> <span id="profileDepartment">Loading...</span></p>
+            <p><strong>Courses:</strong> <span id="profileCourses">Loading...</span></p>
+          </div>
+          <a href="../login/login.html" class="view-profile-btn" style="background: #e74c3c;">Logout</a>
+        </div>
+        <button id="profileButton" type="button">Profile</button>
+      </div>
+    </div>
+  </div>
+
+    <h1>Upload Course Materials</h1>
+
+    <div class="upload-section" id="documents-section">
+        <h2>Upload Documents</h2>
+        <form id="documentsForm">
+            <label for="docTitle">Document Title</label>
+            <input type="text" id="docTitle" name="docTitle" placeholder="Enter document title" required />
+
+            <label for="docFile">Select Document File</label>
+            <input type="file" id="docFile" name="docFile" accept=".pdf,.doc,.docx,.ppt,.pptx" required />
+
+            <button type="submit">Upload Document</button>
+        </form>
+    </div>
+
+    <div class="upload-section" id="videos-section">
+        <h2>Upload Videos</h2>
+        <form id="videosForm">
+            <label for="videoTitle">Video Title</label>
+            <input type="text" id="videoTitle" name="videoTitle" placeholder="Enter video title" required />
+
+            <label for="videoFile">Select Video File</label>
+            <input type="file" id="videoFile" name="videoFile" accept="video/*" required />
+
+            <button type="submit">Upload Video</button>
+        </form>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCb-RJyAYSFitVvFMOp4Ax6e4lORqHb4ow",
+            authDomain: "room-allotment-system.firebaseapp.com",
+            databaseURL: "https://room-allotment-system-default-rtdb.firebaseio.com",
+            projectId: "room-allotment-system",
+            storageBucket: "room-allotment-system.firebasestorage.app",
+            messagingSenderId: "477762218991",
+            appId: "1:477762218991:web:1bd7c3149ae90547d1241a",
+            measurementId: "G-QFWB72V6BS"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
+        const firestore = firebase.firestore();
+
+        // Upload document handler
+        document.getElementById('documentsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const title = document.getElementById('docTitle').value.trim();
+            const fileInput = document.getElementById('docFile');
+            const file = fileInput.files[0];
+            if (!title || !file) {
+                alert('Please provide both title and file.');
+                return;
+            }
+            const storageRef = storage.ref('courseMaterials/documents/' + file.name);
+            const uploadTask = storageRef.put(file);
+
+            uploadTask.on('state_changed', 
+                (snapshot) => {
+                    // Progress function (optional)
+                }, 
+                (error) => {
+                    alert('Upload failed: ' + error.message);
+                }, 
+                () => {
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        // Save metadata to Firestore
+                        firestore.collection('courseMaterials').add({
+                            type: 'document',
+                            title: title,
+                            fileName: file.name,
+                            url: downloadURL,
+                            uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }).then(() => {
+                            alert('Document uploaded successfully.');
+                            document.getElementById('documentsForm').reset();
+                        }).catch((error) => {
+                            alert('Failed to save document metadata: ' + error.message);
+                        });
+                    });
+                }
+            );
+        });
+
+        // Upload video handler
+        document.getElementById('videosForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const title = document.getElementById('videoTitle').value.trim();
+            const fileInput = document.getElementById('videoFile');
+            const file = fileInput.files[0];
+            if (!title || !file) {
+                alert('Please provide both title and file.');
+                return;
+            }
+            const storageRef = storage.ref('courseMaterials/videos/' + file.name);
+            const uploadTask = storageRef.put(file);
+
+            uploadTask.on('state_changed', 
+                (snapshot) => {
+                    // Progress function (optional)
+                }, 
+                (error) => {
+                    alert('Upload failed: ' + error.message);
+                }, 
+                () => {
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        // Save metadata to Firestore
+                        firestore.collection('courseMaterials').add({
+                            type: 'video',
+                            title: title,
+                            fileName: file.name,
+                            url: downloadURL,
+                            uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }).then(() => {
+                            alert('Video uploaded successfully.');
+                            document.getElementById('videosForm').reset();
+                        }).catch((error) => {
+                            alert('Failed to save video metadata: ' + error.message);
+                        });
+                    });
+                }
+            );
+        });
+    </script>
+    <script src="js/navbar.js"></script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enhanced Timetable Generator - Teacher Portal</title>
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/timetable-generator.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+</head>
+<body>
+ <!-- Navigation Bar -->
+ <div class="navbar">
+  <div class="logo">
+  <i class="fas fa-chalkboard-teacher"></i>
+  <span>Teacher Portal</span>
+  </div>
+  <div class="nav-links">
+  <a href="dashboardt.html"><i class="fas fa-home"></i> Home</a>
+  <a href="timetable-generator.html"><i class="fas fa-calendar-alt"></i> Timetable</a>
+  <a href="report.html"><i class="fas fa-chart-bar"></i> Reports</a>
+  <div class="profile-logo-container" style="display: flex;">
+      <div class="profile-logo" id="profileLogo" style="position: relative;">
+      <img
+          src="teacher-avatar.png"
+          alt="Teacher Profile"
+          id="profileImage"
+      />
+      <input type="file" id="uploadImageInput" accept="image/*" style="display: none" />
+      </div>
+      <div class="profile-dropdown" id="profileDropdown">
+      <div class="profile-header" style="position: relative;">
+          <img
+          src="teacher-avatar.png"
+          class="profile-avatar"
+          alt="Teacher Avatar"
+          id="profileAvatar"/>
+          <button
+          id="uploadImageBtn"
+          title="Upload Profile Image"> + </button>
+          <div class="profile-container">
+              <div class="profile-item">
+                  <span class="profile-label">Name:</span>
+                  <span class="profile-value" id="profileName"></span>
+              </div>
+              <div class="profile-item">
+                  <span class="profile-label">Teacher ID:</span>
+                  <span class="profile-value" id="profileNumber"></span>
+              </div>
+              <div class="profile-item">
+                  <span class="profile-label">Email:</span>
+                  <span class="profile-value" id="profileEmail"></span>
+              </div>
+              <div class="profile-item">
+                  <span class="profile-label">Department:</span>
+                  <span class="profile-value" id="profileDepartment"></span>
+              </div>
+              <div class="profile-item">
+                  <span class="profile-label">Subjects:</span>
+                  <span class="profile-value" id="profileSubject"></span>
+              </div>
+          </div>
+      <a href="../login/login.html" class="view-profile-btn" style="background: #e74c3c;">Logout</a>
+      </div>
+  </div>
+  <button id="profileButton" type="button">Profile</button>
+  <button id="darkModeToggle" title="Toggle Dark Mode" class="fas fa-moon"></button>
+  </div>
+ </div>
+</div>  
+
+    <div class="container">
+    <h1>Enhanced Timetable Generator</h1>
+
+    <div class="timetable-form">
+      <div class="form-group">
+        <label>Select and Configure Days:</label>
+        <div class="day-selection-container">
+          <div class="day-option">
+            <label>
+              <input type="checkbox" name="weekDays" value="Monday" onchange="toggleDayConfig(this)" />
+              Monday
+            </label>
+            <div id="monday-config" class="day-config" style="display: none">
+              <h3>Monday Periods</h3>
+              <div class="period-container" id="monday-periods"></div>
+              <button onclick="addPeriod('monday')">Add Period</button>
+            </div>
+          </div>
+          <div class="day-option">
+            <label>
+              <input type="checkbox" name="weekDays" value="Tuesday" onchange="toggleDayConfig(this)" />
+              Tuesday
+            </label>
+            <div id="tuesday-config" class="day-config" style="display: none">
+              <h3>Tuesday Periods</h3>
+              <div class="period-container" id="tuesday-periods"></div>
+              <button onclick="addPeriod('tuesday')">Add Period</button>
+            </div>
+          </div>
+          <div class="day-option">
+            <label>
+              <input type="checkbox" name="weekDays" value="Wednesday" onchange="toggleDayConfig(this)" />
+              Wednesday
+            </label>
+            <div id="wednesday-config" class="day-config" style="display: none">
+              <h3>Wednesday Periods</h3>
+              <div class="period-container" id="wednesday-periods"></div>
+              <button onclick="addPeriod('wednesday')">Add Period</button>
+            </div>
+          </div>
+          <div class="day-option">
+            <label>
+              <input type="checkbox" name="weekDays" value="Thursday" onchange="toggleDayConfig(this)" />
+              Thursday
+            </label>
+            <div id="thursday-config" class="day-config" style="display: none">
+              <h3>Thursday Periods</h3>
+              <div class="period-container" id="thursday-periods"></div>
+              <button onclick="addPeriod('thursday')">Add Period</button>
+            </div>
+          </div>
+          <div class="day-option">
+            <label>
+              <input type="checkbox" name="weekDays" value="Friday" onchange="toggleDayConfig(this)" />
+              Friday
+            </label>
+            <div id="friday-config" class="day-config" style="display: none">
+              <h3>Friday Periods</h3>
+              <div class="period-container" id="friday-periods"></div>
+              <button onclick="addPeriod('friday')">Add Period</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="periodDuration">Period Duration (minutes):</label>
+        <input
+          type="number"
+          id="periodDuration"
+          min="30"
+          max="120"
+          value="45"
+          aria-label="Set period duration in minutes"
+          title="Duration of each period"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="breakDuration">Break Duration (minutes):</label>
+        <input
+          type="number"
+          id="breakDuration"
+          min="0"
+          max="30"
+          value="5"
+          aria-label="Set break duration in minutes"
+          title="Duration of breaks between periods"
+        />
+      </div>
+
+      <div id="timetable-preview" class="timetable-preview"></div>
+      <button id="finalTimetableBtn" onclick="generateTimetable()">Final Timetable</button>
+    </div>
+  </div>
+  <div id="saved-periods-display" class="saved-periods-display">
+    <h2>Saved Periods Overview</h2>
+    <div id="saved-periods-content"></div>
+  </div>
+  <script src="js/navbar.js"></script>
+  <script src="js/timetable-generator.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Fetch teacher name from localStorage or API and update the teacherNameDisplay div
+      const teacherNameDisplay = document.getElementById("teacherNameDisplay");
+      const teacherName = localStorage.getItem("teacherName") || "";
+
+      if (teacherName) {
+        // Use createElement to create a span and update the display
+        const span = document.createElement("span");
+        span.textContent = "Logged in Teacher: " + teacherName;
+        teacherNameDisplay.appendChild(span);
+      } else {
+        teacherNameDisplay.textContent = "Teacher not logged in";
+      }
+    });
+  </script>
+</body>
+</html>
